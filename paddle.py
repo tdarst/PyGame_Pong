@@ -14,10 +14,6 @@ class Paddle:
         # Surface that holds the paddle's image, gets drawn onto the game window surface
         self.surface = pygame.Surface((self.width, self.length))
         
-        # Paddle image path and sprite
-        self.imagePath = ('Sprites\Paddle.png')
-        self.sprite = pygame.image.load(self.imagePath)
-        
         # Paddle keyboarad controls
         self.upKey = UpKey
         self.downKey = DownKey
