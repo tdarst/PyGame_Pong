@@ -1,5 +1,6 @@
 import pygame
 
+
 ''' FILE TO HOLD ALL OF THE GLOBAL VARIABLES AND CONTROLS '''
 
 # Color settings for the game window
@@ -12,8 +13,8 @@ BACKGROUND_COLOR   = (BACKGROUND_COLOR_R, BACKGROUND_COLOR_G, BACKGROUND_COLOR_B
 GAME_WINDOW_CAPTION = "Pygame Pong - Trevor Darst"
 
 # Values for the speed of the paddles and ball
-INITIAL_BALL_SPEED_X   = 0.5
-INITIAL_BALL_SPEED_Y   = 0.5
+INITIAL_BALL_SPEED_X   = 1
+INITIAL_BALL_SPEED_Y   = 1
 INITIAL_PADDLE_SPEED_Y = 1
 
 # Values for the keyboard controls for the paddles
@@ -32,4 +33,4 @@ PONG_WINDOW_BOTTOM = 600
 PONG_WINDOW_LEFT   = 0
 PONG_WINDOW_RIGHT  = 800
 
-PONG_WINDOW_COLOR = (0, 0, 0)
+PONG_WINDOW_COLOR = (100, 100, 0)

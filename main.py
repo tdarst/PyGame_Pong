@@ -2,11 +2,14 @@ import pygame, time, os
 from PongProperties import *
 from paddle import Paddle
 from pongBall import PongBall
+import threading
 
 # Initialize game window, set caption, and fill the background
 GAME_WINDOW = pygame.display.set_mode((GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT))
 pygame.display.set_caption(GAME_WINDOW_CAPTION)
 GAME_WINDOW.fill(BACKGROUND_COLOR)
+
+clock = pygame.time.Clock()
 
 # -------------------------------------------------------------------------------------------------------
 # Function: TrackMovementAndDraw()
@@ -70,7 +73,7 @@ def DetectGoal(ball, player_dict):
 # Returns: Nothing
 # -------------------------------------------------------------------------------------------------------
 def main():
-
+    dt = clock.tick(60)
     # Initialize objects for the two players and the ball
     player_right = Paddle(795, 325, INITIAL_PADDLE_SPEED_Y, PLAYER_RIGHT_CONTROL_UP, PLAYER_RIGHT_CONTROL_DOWN)
     player_left  = Paddle(0, 100, INITIAL_PADDLE_SPEED_Y, PLAYER_LEFT_CONTROL_UP, PLAYER_LEFT_CONTROL_DOWN)
@@ -82,10 +85,14 @@ def main():
 
     # Game loop condition
     running = True
+    integer = 0
     
     # Game loop
     while running:
-    
+        integer += 1
+        # Updates the full display surface to the screen
+        pygame.display.flip()
+
         # Update game object coordinates and draw them
         TrackMovementAndDraw(game_obj_list)
         
@@ -105,11 +112,8 @@ def main():
         # Detect whether the user has pressed the exit button in window, if so, exit program
         for event in pygame.event.get():
             if event.type == pygame.QUIT: # pygame.QUIT = "X" button in window upper right
-                running = False
-        
-        # Updates the full display surface to the screen
-        pygame.display.flip()
-        
+                running = False    
+  
 if __name__ == "__main__":
     main()
 
