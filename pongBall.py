@@ -29,10 +29,11 @@ class PongBall:
     #          settings based on the ball coordinates (if the ball hits the top or bottom of the screen)
     # Returns: Nothing
     # -------------------------------------------------------------------------------------------------------   
-    def updateCoordinates(self, PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP):
-        # Modify coordinates based on speed setting, update directional variables
-        self.coordX += self.speedX
-        self.coordY += self.speedY
+    def updateCoordinates(self, PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP, framerate):
+        # Modify coordinates based on speed setting, update directional variables.
+        # Framerate is used to tie the object positioning to the current framerate.
+        self.coordX += self.speedX*framerate
+        self.coordY += self.speedY*framerate
         
         self.left = self.coordX
         self.right = self.coordX + self.diameter

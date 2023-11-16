@@ -36,15 +36,17 @@ class Paddle:
     #          the top or bottom of the screen.
     # Returns: Nothing
     # -------------------------------------------------------------------------------------------------------   
-    def updateCoordinates(self, PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP):
+    def updateCoordinates(self, PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP, framerate):
         key = pygame.key.get_pressed()
         if key[self.upKey]:
             if self.top != PONG_WINDOW_TOP:
-                self.coordY -= self.speedY
+                # Tie the object positioning to the current framerate
+                self.coordY -= self.speedY*framerate
             
         if key[self.downKey]:
             if self.bottom != PONG_WINDOW_BOTTOM:
-                self.coordY += self.speedY
+                # Tie the object positioning to the current framerate
+                self.coordY += self.speedY*framerate
                 
         self.left = self.coordX
         self.right = self.coordX + self.width
