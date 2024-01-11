@@ -1,14 +1,5 @@
 import pygame
-from classes import paddle, pongBall, pongSurface, gameWindow, gameSurface
-
-# Color settings for the game window
-PONG_WINDOW_COLOR = (255, 0, 0)
-
-# Dimensions for the movement of the paddle and ball
-PONG_WINDOW_TOP = 100
-PONG_WINDOW_BOTTOM = 600
-PONG_WINDOW_LEFT = 0
-PONG_WINDOW_RIGHT = 800
+from classes import paddle, pongBall, pongSurface, gameWindow
 
 # Initialize game window, add window title, color the background
 GAME_WINDOW = gameWindow.GameWindow()
@@ -24,7 +15,7 @@ GAME_WINDOW = gameWindow.GameWindow()
 def TrackMovementAndDraw(GameObjList):
     GAME_WINDOW.window.fill(GAME_WINDOW.background_color)
     for gameObj in GameObjList:
-        gameObj.updateCoordinates(PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP)
+        gameObj.updateCoordinates(600, 100)
         GAME_WINDOW.window.blit(gameObj.surface, (gameObj.coordX, gameObj.coordY))
         gameObj.fillSurface()
 
@@ -99,7 +90,6 @@ def main():
         # Update game object coordinates and draw them
         TrackMovementAndDraw(GameObjList)
         
-        pygame.draw.line(GAME_WINDOW.window, PONG_WINDOW_COLOR, (PONG_WINDOW_LEFT, PONG_WINDOW_TOP), (PONG_WINDOW_RIGHT, PONG_WINDOW_TOP), width=5)
         # Detect ball and paddle collision
         DetectCollision(Ball, PlayerDict)
         
