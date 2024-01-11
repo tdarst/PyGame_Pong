@@ -1,12 +1,12 @@
-import pygame, os
+import pygame
 
 #Object for the "Ball" in a game of Pong
 
 class PongBall:
-    def __init__(self, InitLocationX, InitLocationY, SpeedX, SpeedY):
+    def __init__(self):
         # Determines how fast the ball is moving
-        self.speedX = SpeedX
-        self.speedY = SpeedY
+        self.speedX = 2
+        self.speedY = 2
         
         # Length and Width
         self.diameter = 5
@@ -15,15 +15,15 @@ class PongBall:
         self.surface = pygame.Surface((self.diameter, self.diameter))
         
         # Coordinate variables, left, right, top and bottom are for better readability in main code
-        self.coordX = InitLocationX
-        self.coordY = InitLocationY 
+        self.coordX = 800
+        self.coordY = 600 
         self.left = self.coordX
         self.right = self.coordX + self.diameter
         self.top = self.coordY
         self.bottom = self.coordY + self.diameter
         
     # -------------------------------------------------------------------------------------------------------
-    # Function: updateCoordinates()
+    # Function: updateCoordinates
     # -------------------------------------------------------------------------------------------------------
     # Purpose: To update the coordinates of the ball based on speed setting and also to alter the speed
     #          settings based on the ball coordinates (if the ball hits the top or bottom of the screen)
@@ -43,7 +43,7 @@ class PongBall:
             self.speedY *= -1
             
     # -------------------------------------------------------------------------------------------------------
-    # Function: fillSurface()
+    # Function: fillSurface
     # -------------------------------------------------------------------------------------------------------
     # Purpose: To fill the ball's surface with color, creating an image.
     # Returns: Nothing
@@ -53,7 +53,7 @@ class PongBall:
         self.surface.fill((255, 255, 255))
     
     # -------------------------------------------------------------------------------------------------------
-    # Function: getRect()
+    # Function: getRect
     # -------------------------------------------------------------------------------------------------------
     # Purpose: To return a Rect object, essentially giving the coordinates of the objects surface for
     #          collision detection purposes.

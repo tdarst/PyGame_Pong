@@ -9,17 +9,6 @@ BACKGROUND_COLOR_G = 0
 BACKGROUND_COLOR_B = 0
 BACKGROUND_COLOR = (BACKGROUND_COLOR_R, BACKGROUND_COLOR_G, BACKGROUND_COLOR_B)
 
-# Values for the speed of the paddles and ball
-INITIAL_BALL_SPEED_X   = 2
-INITIAL_BALL_SPEED_Y   = 2
-INITIAL_PADDLE_SPEED_Y = 4
-
-# Values for the keyboard controls for the paddles
-PLAYER_RIGHT_CONTROL_UP   = pygame.K_UP   # Up arrow for directional keys
-PLAYER_RIGHT_CONTROL_DOWN = pygame.K_DOWN # Down arrow for directional keys
-PLAYER_LEFT_CONTROL_UP    = pygame.K_w    # W key on keyboard
-PLAYER_LEFT_CONTROL_DOWN  = pygame.K_s    # S key on keyboard
-
 # Dimensions for the game window
 GAME_WINDOW_WIDTH  = 800
 GAME_WINDOW_HEIGHT = 600
@@ -36,7 +25,7 @@ pygame.display.set_caption('Pygame Pong - Trevor Darst')
 GAME_WINDOW.fill(BACKGROUND_COLOR)
 
 # -------------------------------------------------------------------------------------------------------
-# Function: TrackMovementAndDraw()
+# Function: TrackMovementAndDraw
 # -------------------------------------------------------------------------------------------------------
 # Purpose: To draw over the game window's previous frame, update the coordinates of the paddles and ball,
 #          draw the surfaces of the paddles and ball to the game window, and then fill in the image for
@@ -51,7 +40,7 @@ def TrackMovementAndDraw(GameObjList):
         gameObj.fillSurface()
 
 # -------------------------------------------------------------------------------------------------------
-# Function: DetectCollision()
+# Function: DetectCollision
 # -------------------------------------------------------------------------------------------------------
 # Purpose: To detect whether the ball has collided with any of the paddles
 # Returns: Nothing
@@ -62,7 +51,7 @@ def DetectCollision(Ball, PlayerDict):
             Ball.speedX *= -1
 
 # -------------------------------------------------------------------------------------------------------
-# Function: UpdateScore()
+# Function: UpdateScore
 # -------------------------------------------------------------------------------------------------------
 # Purpose: To update a players score if they score a goal.
 # Returns: Nothing
@@ -71,7 +60,7 @@ def UpdateScore(player):
     player.score += 1
 
 # -------------------------------------------------------------------------------------------------------
-# Function: DetectGoal()
+# Function: DetectGoal
 # -------------------------------------------------------------------------------------------------------
 # Purpose: To check whether a goal has been scored or not.
 # Returns: Boolean
@@ -91,7 +80,7 @@ def DetectGoal(Ball, playerDict):
     return False
 
 # -------------------------------------------------------------------------------------------------------
-# Function: DetectGoal()
+# Function: DetectGoal
 # -------------------------------------------------------------------------------------------------------
 # Purpose: Initialize objects, run the game loop
 # Returns: Nothing
