@@ -1,7 +1,7 @@
-import pygame, time, os
+import pygame
 import paddle
 from pongBall import PongBall
-from gameWindow import GameWindow
+import gameWindow
 
 # Color settings for the game window
 PONG_WINDOW_COLOR = (255, 0, 0)
@@ -13,7 +13,7 @@ PONG_WINDOW_LEFT = 0
 PONG_WINDOW_RIGHT = 800
 
 # Initialize game window, add window title, color the background
-GAME_WINDOW = GameWindow()
+GAME_WINDOW = gameWindow.GameWindow()
 
 # -------------------------------------------------------------------------------------------------------
 # Function: TrackMovementAndDraw
@@ -82,9 +82,10 @@ def main():
     PlayerRight = paddle.playerRight()
     PlayerLeft  = paddle.playerLeft()
     Ball        = PongBall()
+    PongWindow  = gameWindow.PongSurface()
 
     # Lists to hold different game objects for different iterational purposes
-    GameObjList = [PlayerRight, PlayerLeft, Ball]
+    GameObjList = [PongWindow, PlayerRight, PlayerLeft, Ball]
     PlayerDict = {"PlayerRight":PlayerRight, "PlayerLeft":PlayerLeft}
 
     clock = pygame.time.Clock()

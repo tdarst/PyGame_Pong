@@ -14,11 +14,11 @@ class Paddle:
         self.downKey = None
         
         # Paddle dimensions
-        self.length = 60
+        self.height = 60
         self.width  = 5
         
         # Surface that holds the paddle's image, gets drawn onto the game window surface
-        self.surface = pygame.Surface((self.width, self.length))
+        self.surface = pygame.Surface((self.width, self.height))
         
         # Player score
         self.score = 0
@@ -27,7 +27,7 @@ class Paddle:
         self.left = self.coordX
         self.right = self.coordX + self.width
         self.top = self.coordY
-        self.bottom = self.coordY + self.length
+        self.bottom = self.coordY + self.height
     
     # -------------------------------------------------------------------------------------------------------
     # Function: updateCoordinates()
@@ -49,7 +49,7 @@ class Paddle:
         self.left = self.coordX
         self.right = self.coordX + self.width
         self.top = self.coordY
-        self.bottom = self.coordY + self.length
+        self.bottom = self.coordY + self.height
     
     # -------------------------------------------------------------------------------------------------------
     # Function: fillSurface()
@@ -70,14 +70,14 @@ class Paddle:
     # ------------------------------------------------------------------------------------------------------- 
     def getRect(self):
         # Returns the coordinates of the paddle in a pygame rect object for collision detection purposes
-        return pygame.Rect(self.coordX, self.coordY, self.width, self.length)
+        return pygame.Rect(self.coordX, self.coordY, self.width, self.height)
 
 
 class playerLeft(Paddle):
     def __init__(self):
         super().__init__()
         self.coordX = 0
-        self.coordY = 100
+        self.coordY = 10
         self.upKey = pygame.K_w
         self.downKey = pygame.K_s
 
