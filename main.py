@@ -10,9 +10,9 @@ BACKGROUND_COLOR_B = 0
 BACKGROUND_COLOR = (BACKGROUND_COLOR_R, BACKGROUND_COLOR_G, BACKGROUND_COLOR_B)
 
 # Values for the speed of the paddles and ball
-INITIAL_BALL_SPEED_X   = 0.25
-INITIAL_BALL_SPEED_Y   = 0.25
-INITIAL_PADDLE_SPEED_Y = 0.5
+INITIAL_BALL_SPEED_X   = 2
+INITIAL_BALL_SPEED_Y   = 2
+INITIAL_PADDLE_SPEED_Y = 4
 
 # Values for the keyboard controls for the paddles
 PLAYER_RIGHT_CONTROL_UP   = pygame.K_UP   # Up arrow for directional keys
@@ -106,12 +106,16 @@ def main():
     # Lists to hold different game objects for different iterational purposes
     GameObjList = [PlayerRight, PlayerLeft, Ball]
     PlayerDict = {"PlayerRight":PlayerRight, "PlayerLeft":PlayerLeft}
+
+    clock = pygame.time.Clock()
     
     # Game loop boolean
     running = True
     
     # Game loop
     while running:
+
+        clock.tick(60)
     
         # Update game object coordinates and draw them
         TrackMovementAndDraw(GameObjList)
