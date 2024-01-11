@@ -1,17 +1,10 @@
 import pygame, time, os
-from paddle import *
+import paddle
 from pongBall import PongBall
+from gameWindow import GameWindow
 
 # Color settings for the game window
 PONG_WINDOW_COLOR = (255, 0, 0)
-BACKGROUND_COLOR_R = 0
-BACKGROUND_COLOR_G = 0
-BACKGROUND_COLOR_B = 0
-BACKGROUND_COLOR = (BACKGROUND_COLOR_R, BACKGROUND_COLOR_G, BACKGROUND_COLOR_B)
-
-# Dimensions for the game window
-GAME_WINDOW_WIDTH  = 800
-GAME_WINDOW_HEIGHT = 600
 
 # Dimensions for the movement of the paddle and ball
 PONG_WINDOW_TOP = 100
@@ -20,9 +13,7 @@ PONG_WINDOW_LEFT = 0
 PONG_WINDOW_RIGHT = 800
 
 # Initialize game window, add window title, color the background
-GAME_WINDOW = pygame.display.set_mode((GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT))
-pygame.display.set_caption('Pygame Pong - Trevor Darst')
-GAME_WINDOW.fill(BACKGROUND_COLOR)
+GAME_WINDOW = GameWindow()
 
 # -------------------------------------------------------------------------------------------------------
 # Function: TrackMovementAndDraw
@@ -33,10 +24,10 @@ GAME_WINDOW.fill(BACKGROUND_COLOR)
 # Returns: Nothing
 # -------------------------------------------------------------------------------------------------------
 def TrackMovementAndDraw(GameObjList):
-    GAME_WINDOW.fill(BACKGROUND_COLOR)
+    GAME_WINDOW.window.fill(GAME_WINDOW.background_color)
     for gameObj in GameObjList:
         gameObj.updateCoordinates(PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP)
-        GAME_WINDOW.blit(gameObj.surface, (gameObj.coordX, gameObj.coordY))
+        GAME_WINDOW.window.blit(gameObj.surface, (gameObj.coordX, gameObj.coordY))
         gameObj.fillSurface()
 
 # -------------------------------------------------------------------------------------------------------
@@ -72,7 +63,7 @@ def DetectGoal(Ball, playerDict):
         return True
         
     # If ball exits the right side of the window
-    elif Ball.coordX > GAME_WINDOW_WIDTH:
+    elif Ball.coordX > GAME_WINDOW.width:
         UpdateScore(playerDict["PlayerLeft"])
         return True
         
@@ -88,9 +79,9 @@ def DetectGoal(Ball, playerDict):
 def main():
     
     # Initialize objects for the two players and the ball
-    PlayerRight = playerRight()
-    PlayerLeft  = playerLeft()
-    Ball        = PongBall(GAME_WINDOW_WIDTH/2, PONG_WINDOW_TOP, INITIAL_BALL_SPEED_X, INITIAL_BALL_SPEED_Y)
+    PlayerRight = paddle.playerRight()
+    PlayerLeft  = paddle.playerLeft()
+    Ball        = PongBall()
 
     # Lists to hold different game objects for different iterational purposes
     GameObjList = [PlayerRight, PlayerLeft, Ball]
@@ -109,16 +100,15 @@ def main():
         # Update game object coordinates and draw them
         TrackMovementAndDraw(GameObjList)
         
-        pygame.draw.line(GAME_WINDOW, PONG_WINDOW_COLOR, (PONG_WINDOW_LEFT, PONG_WINDOW_TOP), (PONG_WINDOW_RIGHT, PONG_WINDOW_TOP), width=5)
+        pygame.draw.line(GAME_WINDOW.window, PONG_WINDOW_COLOR, (PONG_WINDOW_LEFT, PONG_WINDOW_TOP), (PONG_WINDOW_RIGHT, PONG_WINDOW_TOP), width=5)
         # Detect ball and paddle collision
         DetectCollision(Ball, PlayerDict)
         
         # Detect whether a goal has happened, if so, reset ball
         if DetectGoal(Ball, PlayerDict):
-            Ball.coordX = GAME_WINDOW_WIDTH/2
-            Ball.coordY = PONG_WINDOW_TOP
-            Ball.speedY = INITIAL_BALL_SPEED_Y
-            Ball.speedX = -(INITIAL_BALL_SPEED_X)
+            Ball.coordX = Ball.startX
+            Ball.coordY = Ball.startY
+            Ball.speedX = -(Ball.speedX)
             
         # Detect whether the user has pressed the exit button in window, if so, exit program
         for event in pygame.event.get():

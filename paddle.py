@@ -76,8 +76,8 @@ class Paddle:
 class playerLeft(Paddle):
     def __init__(self):
         super().__init__()
-        self.coordX = 795
-        self.coordY = 325
+        self.coordX = 0
+        self.coordY = 100
         self.upKey = pygame.K_w
         self.downKey = pygame.K_s
 
@@ -86,5 +86,7 @@ class playerRight(Paddle):
         super().__init__()
         self.coordX = 0
         self.coordY = 100
+        self.coordX = 795
+        self.coordY = 325
         self.upKey = pygame.K_UP
         self.downKey = pygame.K_DOWN

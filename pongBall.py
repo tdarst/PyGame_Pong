@@ -14,9 +14,13 @@ class PongBall:
         # Surface that holds the ball's image, gets drawn onto the game window surface
         self.surface = pygame.Surface((self.diameter, self.diameter))
         
+        self.startX = 400
+        self.startY = 300
+
         # Coordinate variables, left, right, top and bottom are for better readability in main code
-        self.coordX = 800
-        self.coordY = 600 
+        self.coordX = self.startX
+        self.coordY = self.startY 
+        
         self.left = self.coordX
         self.right = self.coordX + self.diameter
         self.top = self.coordY
