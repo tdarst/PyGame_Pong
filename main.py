@@ -1,7 +1,5 @@
 import pygame
-import paddle
-from pongBall import PongBall
-import gameWindow
+from classes import paddle, pongBall, pongSurface, gameWindow, gameSurface
 
 # Color settings for the game window
 PONG_WINDOW_COLOR = (255, 0, 0)
@@ -81,8 +79,8 @@ def main():
     # Initialize objects for the two players and the ball
     PlayerRight = paddle.playerRight()
     PlayerLeft  = paddle.playerLeft()
-    Ball        = PongBall()
-    PongWindow  = gameWindow.PongSurface()
+    Ball        = pongBall.PongBall()
+    PongWindow  = pongSurface.PongSurface()
 
     # Lists to hold different game objects for different iterational purposes
     GameObjList = [PongWindow, PlayerRight, PlayerLeft, Ball]
