@@ -1,5 +1,5 @@
 import pygame, time, os
-from paddle import Paddle
+from paddle import *
 from pongBall import PongBall
 
 # Color settings for the game window
@@ -99,8 +99,8 @@ def DetectGoal(Ball, playerDict):
 def main():
     
     # Initialize objects for the two players and the ball
-    PlayerRight = Paddle(795, 325, INITIAL_PADDLE_SPEED_Y, PLAYER_RIGHT_CONTROL_UP, PLAYER_RIGHT_CONTROL_DOWN)
-    PlayerLeft  = Paddle(0, 100, INITIAL_PADDLE_SPEED_Y, PLAYER_LEFT_CONTROL_UP, PLAYER_LEFT_CONTROL_DOWN)
+    PlayerRight = playerRight()
+    PlayerLeft  = playerLeft()
     Ball        = PongBall(GAME_WINDOW_WIDTH/2, PONG_WINDOW_TOP, INITIAL_BALL_SPEED_X, INITIAL_BALL_SPEED_Y)
 
     # Lists to hold different game objects for different iterational purposes

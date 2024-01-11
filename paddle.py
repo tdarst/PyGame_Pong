@@ -3,9 +3,15 @@ import pygame, os
 # Object for the "Paddle" in a game of Pong
 
 class Paddle:
-    def __init__(self, InitLocationX, InitLocationY, SpeedY, UpKey, DownKey):
+    def __init__(self):
         # Determines how fast the paddle is moving       
-        self.speedY = SpeedY
+        self.speedY = 5
+
+        self.coordX = 0
+        self.coordY = 0
+
+        self.upKey = None
+        self.downKey = None
         
         # Paddle dimensions
         self.length = 60
@@ -14,16 +20,10 @@ class Paddle:
         # Surface that holds the paddle's image, gets drawn onto the game window surface
         self.surface = pygame.Surface((self.width, self.length))
         
-        # Paddle keyboarad controls
-        self.upKey = UpKey
-        self.downKey = DownKey
-        
         # Player score
         self.score = 0
         
         # Coordinate variables, left, right, top and bottom are for better readability in main code
-        self.coordX = InitLocationX
-        self.coordY = InitLocationY        
         self.left = self.coordX
         self.right = self.coordX + self.width
         self.top = self.coordY
@@ -71,3 +71,20 @@ class Paddle:
     def getRect(self):
         # Returns the coordinates of the paddle in a pygame rect object for collision detection purposes
         return pygame.Rect(self.coordX, self.coordY, self.width, self.length)
+
+
+class playerLeft(Paddle):
+    def __init__(self):
+        super().__init__()
+        self.coordX = 795
+        self.coordY = 325
+        self.upKey = pygame.K_w
+        self.downKey = pygame.K_s
+
+class playerRight(Paddle):
+    def __init__(self):
+        super().__init__()
+        self.coordX = 0
+        self.coordY = 100
+        self.upKey = pygame.K_UP
+        self.downKey = pygame.K_DOWN
