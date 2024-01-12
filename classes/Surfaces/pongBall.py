@@ -1,5 +1,5 @@
 import pygame
-from . import gameSurface
+from ..Base import gameSurface
 
 #Object for the "Ball" in a game of Pong
 class PongBall(gameSurface.GameSurface):

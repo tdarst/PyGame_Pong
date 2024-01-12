@@ -1,5 +1,6 @@
 import pygame
-from classes import paddle, pongBall, pongSurface, gameWindow
+from classes.Surfaces import paddle, pongBall, pongSurface
+from classes.Window import gameWindow
 
 # Initialize game window, add window title, color the background
 GAME_WINDOW = gameWindow.GameWindow()

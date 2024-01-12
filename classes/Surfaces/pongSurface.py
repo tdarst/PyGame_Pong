@@ -1,5 +1,5 @@
 import pygame
-from . import gameSurface
+from ..Base import gameSurface
 
 class PongSurface(gameSurface.GameSurface):
     def __init__(self):

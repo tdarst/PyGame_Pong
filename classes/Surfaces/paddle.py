@@ -1,5 +1,5 @@
 import pygame
-from . import gameSurface
+from ..Base import gameSurface
 # Inherited by both players
 class Paddle(gameSurface.GameSurface):
     def __init__(self):
