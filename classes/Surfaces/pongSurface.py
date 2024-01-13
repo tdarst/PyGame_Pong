@@ -18,3 +18,6 @@ class PongSurface(gameSurface.GameSurface):
         self.coordX = 0
         self.coordY = 100
         self.surface = pygame.Surface((self.width, self.height))
+
+    def fillSurface(self):
+        self.surface.fill(self.color)

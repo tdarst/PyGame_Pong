@@ -1,5 +1,5 @@
 import pygame
-from classes.Surfaces import paddle, pongBall, pongSurface
+from classes.Surfaces import paddle, pongBall, pongSurface, scoreSurface
 from classes.Window import gameWindow
 
 # Initialize game window object
@@ -17,6 +17,7 @@ def TrackMovementAndDraw(GameObjList):
     GAME_WINDOW.window.fill(GAME_WINDOW.background_color)
     for gameObj in GameObjList:
         gameObj.updateCoordinates(600, 100)
+        gameObj.drawImage()
         GAME_WINDOW.window.blit(gameObj.surface, (gameObj.coordX, gameObj.coordY))
         gameObj.fillSurface()
 
@@ -32,33 +33,34 @@ def DetectCollision(Ball, PlayerDict):
             Ball.speedX *= -1
 
 # -------------------------------------------------------------------------------------------------------
-# Function: UpdateScore
-# -------------------------------------------------------------------------------------------------------
-# Purpose: To update a players score if they score a goal.
-# Returns: Nothing
-# -------------------------------------------------------------------------------------------------------
-def UpdateScore(player):
-    player.score += 1
-
-# -------------------------------------------------------------------------------------------------------
 # Function: DetectGoal
 # -------------------------------------------------------------------------------------------------------
 # Purpose: To check whether a goal has been scored or not.
 # Returns: Boolean
 # -------------------------------------------------------------------------------------------------------
 def DetectGoal(Ball, playerDict):
-    # If ball exits the left side of the window
+    goalScored = False
+
+    # If ball exits the left side of the window increment player right score
+    # and update score displayed
     if Ball.coordX < -(Ball.diameter):
-        UpdateScore(playerDict["PlayerRight"])
-        return True
+        goalScored = True
+        player = playerDict["PlayerRight"]
+        player.score += 1
+        player.scoreDisplay.changeImage(player.score)
         
-    # If ball exits the right side of the window
+    # If ball exits the right side of the window increment player left score
+    # and update score displayed
     elif Ball.coordX > GAME_WINDOW.width:
-        UpdateScore(playerDict["PlayerLeft"])
-        return True
-        
-    # If no goal has been scored  
-    return False
+        goalScored = True
+        player = playerDict["PlayerLeft"]
+        player.score += 1
+        player.scoreDisplay.changeImage(player.score)
+
+    if goalScored:
+        Ball.coordX = Ball.startX
+        Ball.coordY = Ball.startY
+        Ball.speedX *= -1
 
 # -------------------------------------------------------------------------------------------------------
 # Function: DetectGoal
@@ -69,13 +71,13 @@ def DetectGoal(Ball, playerDict):
 def main():
     
     # Initialize objects for the two players and the ball
-    PlayerRight = paddle.playerRight()
-    PlayerLeft  = paddle.playerLeft()
-    Ball        = pongBall.PongBall()
-    PongWindow  = pongSurface.PongSurface()
+    PlayerRight      = paddle.playerRight()
+    PlayerLeft       = paddle.playerLeft()
+    Ball             = pongBall.PongBall()
+    PongWindow       = pongSurface.PongSurface()
 
     # Lists to hold different game objects for different iterational purposes
-    GameObjList = [PongWindow, PlayerRight, PlayerLeft, Ball]
+    GameObjList = [PongWindow, PlayerRight, PlayerLeft, Ball, PlayerRight.scoreDisplay, PlayerLeft.scoreDisplay]
     PlayerDict  = {"PlayerRight":PlayerRight, "PlayerLeft":PlayerLeft}
 
     clock = pygame.time.Clock()
@@ -95,10 +97,7 @@ def main():
         DetectCollision(Ball, PlayerDict)
         
         # Detect whether a goal has happened, if so, reset ball
-        if DetectGoal(Ball, PlayerDict):
-            Ball.coordX = Ball.startX
-            Ball.coordY = Ball.startY
-            Ball.speedX *= -1
+        DetectGoal(Ball, PlayerDict)
             
         # Detect whether the user has pressed the exit button in window, if so, exit program
         for event in pygame.event.get():

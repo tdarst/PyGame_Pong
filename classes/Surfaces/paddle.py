@@ -1,5 +1,6 @@
 import pygame
 from ..Base import gameSurface
+from . import scoreSurface
 # Inherited by both players
 class Paddle(gameSurface.GameSurface):
     def __init__(self):
@@ -48,6 +49,9 @@ class Paddle(gameSurface.GameSurface):
         self.top = self.coordY
         self.bottom = self.coordY + self.height
 
+    def fillSurface(self):
+        self.surface.fill(self.color)
+
 # Class for the left side paddle/player
 class playerLeft(Paddle):
     def __init__(self):
@@ -56,6 +60,7 @@ class playerLeft(Paddle):
         self.coordY = 290
         self.upKey = pygame.K_w
         self.downKey = pygame.K_s
+        self.scoreDisplay = scoreSurface.playerLeftScoreDisplay()
 
 # Class for the right side paddle/player
 class playerRight(Paddle):
@@ -65,3 +70,4 @@ class playerRight(Paddle):
         self.coordY = 290
         self.upKey = pygame.K_UP
         self.downKey = pygame.K_DOWN
+        self.scoreDisplay = scoreSurface.playerRightScoreDisplay()

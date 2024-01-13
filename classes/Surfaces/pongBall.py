@@ -51,3 +51,6 @@ class PongBall(gameSurface.GameSurface):
         
         if self.top < PONG_WINDOW_TOP or self.bottom > PONG_WINDOW_BOTTOM:
             self.speedY *= -1
+
+    def fillSurface(self):
+        self.surface.fill(self.color)

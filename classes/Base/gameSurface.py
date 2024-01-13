@@ -16,6 +16,9 @@ class GameSurface:
         # Surface object
         self.surface = pygame.Surface((self.width, self.height))
 
+        # Sets the sprite to be drawn over the surface
+        self.currentImage = None
+
         # Color defining variables (default is black)
         self.color_r = 0
         self.color_g = 0
@@ -45,12 +48,18 @@ class GameSurface:
         pass
 
     # =======================================================================================================
+    # Name: drawImage
+    # Purpose: Draws sprite over surface, some surfaces don't use drawImage but it's apart of the draw loop
+    # =======================================================================================================
+    def drawImage(self):
+        pass
+
+    # =======================================================================================================
     # Name: fillSurface
     # Purpose: To fill the paddle's surface with color, creating an image.
     # =======================================================================================================
     def fillSurface(self):
-        # Fill the surface, effectively "drawing"  the paddle's image
-        self.surface.fill(self.color)
+        pass
     
     # =======================================================================================================
     # Name: getRect
