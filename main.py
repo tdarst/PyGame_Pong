@@ -1,18 +1,16 @@
 import pygame
-from classes.Surfaces import paddle, pongBall, pongSurface, scoreSurface
+from classes.Surfaces import paddle, pongBall, pongSurface
 from classes.Window import gameWindow
 
 # Initialize game window object
 GAME_WINDOW = gameWindow.GameWindow()
 
-# -------------------------------------------------------------------------------------------------------
-# Function: TrackMovementAndDraw
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
+# Name: TrackMovementAndDraw
 # Purpose: To draw over the game window's previous frame, update the coordinates of the paddles and ball,
 #          draw the surfaces of the paddles and ball to the game window, and then fill in the image for
 #          the paddle and ball surfaces.
-# Returns: Nothing
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
 def TrackMovementAndDraw(GameObjList):
     GAME_WINDOW.window.fill(GAME_WINDOW.background_color)
     for gameObj in GameObjList:
@@ -21,23 +19,19 @@ def TrackMovementAndDraw(GameObjList):
         GAME_WINDOW.window.blit(gameObj.surface, (gameObj.coordX, gameObj.coordY))
         gameObj.fillSurface()
 
-# -------------------------------------------------------------------------------------------------------
-# Function: DetectCollision
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
+# Name: DetectCollision
 # Purpose: To detect whether the ball has collided with any of the paddles
-# Returns: Nothing
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
 def DetectCollision(Ball, PlayerDict):
     for player in PlayerDict.values():
         if pygame.Rect.colliderect(player.getRect(), Ball.getRect()):
             Ball.speedX *= -1
 
-# -------------------------------------------------------------------------------------------------------
-# Function: DetectGoal
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
+# Name: DetectGoal
 # Purpose: To check whether a goal has been scored or not.
-# Returns: Boolean
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
 def DetectGoal(Ball, playerDict):
     goalScored = False
 
@@ -62,12 +56,10 @@ def DetectGoal(Ball, playerDict):
         Ball.coordY = Ball.startY
         Ball.speedX *= -1
 
-# -------------------------------------------------------------------------------------------------------
-# Function: DetectGoal
-# -------------------------------------------------------------------------------------------------------
-# Purpose: Initialize objects, run the game loop
-# Returns: Nothing
-# -------------------------------------------------------------------------------------------------------
+# ======================================================================================================
+# Name: main
+# Purpose: Initializes objects and variables and runs the game loop
+# ======================================================================================================
 def main():
     
     # Initialize objects for the two players and the ball
