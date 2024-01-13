@@ -1,10 +1,16 @@
 import pygame
 from ..Base import gameSurface
 from . import scoreSurface
-# Inherited by both players
+
+# ===========================================================================================
+# Name: Paddle
+# Purpose: Class for creating surfaces to hold the paddles of both players. Gets inherited
+#          by both player's respective paddle classes.
+# ===========================================================================================
 class Paddle(gameSurface.GameSurface):
     def __init__(self):
         super().__init__()
+
         # Determines how fast the paddle is moving       
         self.speedY = 5
 
@@ -16,6 +22,7 @@ class Paddle(gameSurface.GameSurface):
         self.height = 60
         self.width  = 5
 
+        # Color settings
         self.color_r = 255
         self.color_g = 255
         self.color_b = 255
@@ -35,10 +42,13 @@ class Paddle(gameSurface.GameSurface):
     # =======================================================================================================
     def updateCoordinates(self, PONG_WINDOW_BOTTOM, PONG_WINDOW_TOP):
         key = pygame.key.get_pressed()
+
+        # If key is up-key, go up.
         if key[self.upKey]:
             if self.top != PONG_WINDOW_TOP:
                 self.coordY -= self.speedY
-            
+        
+        # If key is down-key, go down.
         if key[self.downKey]:
             if self.bottom != PONG_WINDOW_BOTTOM:
                 self.coordY += self.speedY
@@ -49,25 +59,47 @@ class Paddle(gameSurface.GameSurface):
         self.top = self.coordY
         self.bottom = self.coordY + self.height
 
+    # =============================================================
+    # Name: fillSurface
+    # Purpose: Fills paddle with color setting
+    # =============================================================
     def fillSurface(self):
         self.surface.fill(self.color)
 
-# Class for the left side paddle/player
+# ===========================================================================================
+# Name: playerLeft
+# Purpose: Class for left player's paddle
+# ===========================================================================================
 class playerLeft(Paddle):
     def __init__(self):
         super().__init__()
+
+        # Sets player left's initial coordinates
         self.coordX = 0
         self.coordY = 290
+
+        # Sets controls
         self.upKey = pygame.K_w
         self.downKey = pygame.K_s
+
+        # Initializes player left's score display object
         self.scoreDisplay = scoreSurface.playerLeftScoreDisplay()
 
-# Class for the right side paddle/player
+# ===========================================================================================
+# Name: playerRight
+# Purpose: Class for right player's paddle
+# ===========================================================================================
 class playerRight(Paddle):
     def __init__(self):
         super().__init__()
+
+        # Sets player right's initial coordinates
         self.coordX = 795
         self.coordY = 290
+
+        # Sets controls
         self.upKey = pygame.K_UP
         self.downKey = pygame.K_DOWN
+
+        # Initializes player right's score display object
         self.scoreDisplay = scoreSurface.playerRightScoreDisplay()

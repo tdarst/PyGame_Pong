@@ -1,24 +1,24 @@
 import pygame
 
-# Inherited by all surfaces in the game.
+# ===========================================================================================
+# Name: GameSurface
+# Purpose: Base class for surfaces. Inherited by all surfaces in the game.
+# ===========================================================================================
 class GameSurface:
     def __init__(self):
         super().__init__()
         
-        # Surface's dimensions
+        # Surface dimensions
         self.width = 0
         self.height = 0
 
-        # Surface's coordinates
+        # Surface initial coordinates
         self.coordX = 0
         self.coordY = 0
 
-        # Surface object
+        # Initialize surface object for drawing
         self.surface = pygame.Surface((self.width, self.height))
-
-        # Sets the sprite to be drawn over the surface
-        self.currentImage = None
-
+        
         # Color defining variables (default is black)
         self.color_r = 0
         self.color_g = 0

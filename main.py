@@ -7,13 +7,13 @@ GAME_WINDOW = gameWindow.GameWindow()
 
 # ======================================================================================================
 # Name: TrackMovementAndDraw
-# Purpose: To draw over the game window's previous frame, update the coordinates of the paddles and ball,
-#          draw the surfaces of the paddles and ball to the game window, and then fill in the image for
-#          the paddle and ball surfaces.
+# Purpose: Updates the coordinates of and draws all of the game objects in the order that they are given 
+#          in the GameObjList via iteration.
 # ======================================================================================================
 def TrackMovementAndDraw(GameObjList):
     GAME_WINDOW.window.fill(GAME_WINDOW.background_color)
     for gameObj in GameObjList:
+        # TODO: change this function to no longer need use of passed in coordinates of pong window.
         gameObj.updateCoordinates(600, 100)
         gameObj.drawImage()
         GAME_WINDOW.window.blit(gameObj.surface, (gameObj.coordX, gameObj.coordY))
