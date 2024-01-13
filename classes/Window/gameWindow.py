@@ -31,7 +31,3 @@ class GameWindow:
         # Fill window with color setting
         self.window.fill(self.background_color)
 
-    # TODO: implement states(i.e. menu, game, etc.)
-    def changeState(self, State):
-        self.state = State
-
