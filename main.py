@@ -2,7 +2,7 @@ import pygame
 from classes.Surfaces import paddle, pongBall, pongSurface
 from classes.Window import gameWindow
 
-# Initialize game window, add window title, color the background
+# Initialize game window object
 GAME_WINDOW = gameWindow.GameWindow()
 
 # -------------------------------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ def main():
 
     # Lists to hold different game objects for different iterational purposes
     GameObjList = [PongWindow, PlayerRight, PlayerLeft, Ball]
-    PlayerDict = {"PlayerRight":PlayerRight, "PlayerLeft":PlayerLeft}
+    PlayerDict  = {"PlayerRight":PlayerRight, "PlayerLeft":PlayerLeft}
 
     clock = pygame.time.Clock()
     
@@ -98,7 +98,7 @@ def main():
         if DetectGoal(Ball, PlayerDict):
             Ball.coordX = Ball.startX
             Ball.coordY = Ball.startY
-            Ball.speedX = -(Ball.speedX)
+            Ball.speedX *= -1
             
         # Detect whether the user has pressed the exit button in window, if so, exit program
         for event in pygame.event.get():

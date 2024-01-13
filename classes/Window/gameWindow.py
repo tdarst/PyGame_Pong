@@ -2,9 +2,10 @@ import pygame
 
 class GameWindow:
     def __init__(self):
-        super().__init__
         self.width = 800
         self.height = 600
+
+        self.mode = None
 
         self.background_color_r = 0
         self.background_color_g = 0
@@ -18,4 +19,7 @@ class GameWindow:
         self.caption = pygame.display.set_caption('Pygame Pong - Trevor Darst')
 
         self.window.fill(self.background_color)
+
+    def changeMode(self, Mode):
+        self.mode = Mode
 
