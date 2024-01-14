@@ -2,30 +2,50 @@ import pygame
 from classes.Window import gameWindow
 from . import gameState
 
+# =============================================================================
+# Name: Game
+# Purpose: Object to hold the states, window, and run the game loop
+# =============================================================================
 class Game:
     def __init__(self):
+        
+        # Window upon which everything is drawn over
         self.window = gameWindow.GameWindow()
 
+        # Running flag
         self.running = True
 
+        # Dictionary of all game states
+        # TODO: implement the menu and the game over menu
         self.states = {
-            "Menu" : 0,
-            "Game" : gameState.PlayingPong(self)
+            "Menu" : None,
+            "Game" : gameState.PlayingPong(self),
+            "Game Over Menu" : None
         }
         
+        # Holds whatever state is currently running
         self.currentState = self.states["Game"]
 
+        # Instantiate clock object that dictates frame rate
         self.clock = pygame.time.Clock()
 
+    # =============================================================================
+    # Name: gameLoop
+    # Purpose: Runs the game loop
+    # =============================================================================
     def gameLoop(self):
         while self.running:
-
+            
+            # Try to keep it at 60 fps
             self.clock.tick(60)
 
-            self.currentState.EventLoop()
+            # Go through events of current state
+            self.currentState.runEvents()
 
+            # Search for player quit event, quit if it exists
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
 
+            # Update the window
             pygame.display.flip()

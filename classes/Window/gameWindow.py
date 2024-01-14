@@ -11,9 +11,6 @@ class GameWindow:
         self.width = 800
         self.height = 600
 
-        # TODO: implement states (i.e. menu, game, etc.)
-        self.state = None
-
         # Color settings for the window
         self.background_color_r = 0
         self.background_color_g = 0
