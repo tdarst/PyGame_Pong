@@ -1,5 +1,5 @@
 import pygame
-from ..Base import gameSurface
+from ....Base import gameSurface
 
 # ===========================================================================================
 # Name: scoreSurface
@@ -37,7 +37,7 @@ class scoreSurface(gameSurface.GameSurface):
     # Name: changeImage
     # Purpose: Updates the image to reflect the player's score
     # ==========================================================================
-    def changeImage(self, number):
+    def updateSprite(self, number):
         if number < 10:
             self.surface = self.images[str(number)]
 

@@ -1,6 +1,6 @@
 import pygame
 from classes.Window import gameWindow
-from . import gameState
+from ..States.Play import Play
 
 # =============================================================================
 # Name: Game
@@ -19,7 +19,7 @@ class Game:
         # TODO: implement the menu and the game over menu
         self.states = {
             "Menu" : None,
-            "Game" : gameState.PlayingPong(self),
+            "Game" : Play.PlayingPong(self),
             "Game Over Menu" : None
         }
         

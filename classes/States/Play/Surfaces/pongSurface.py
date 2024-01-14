@@ -1,5 +1,4 @@
-import pygame
-from ..Base import gameSurface
+from ....Base import gameSurface
 
 # ===================================================================================
 # Name: PongSurface

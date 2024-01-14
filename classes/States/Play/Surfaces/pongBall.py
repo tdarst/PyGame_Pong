@@ -1,4 +1,4 @@
-from ..Base import gameSurface
+from ....Base import gameSurface
 
 # ==========================================================================
 # Name: PongBall
