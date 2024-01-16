@@ -3,6 +3,19 @@ import sys
 import selectors
 import types
 
+def accept_wrapper(sock):
+    # Accept socket connection
+    conn, addr = sock.accept()
+    print(f"Accepted connection from {addr}")
+    # Remove blocking
+    conn.setblocking(False)
+    # Simple object with the given attributes
+    data = types.SimpleNamespace(addr=addr, inb=b"", outb=b"")
+    # Tells whether the client is ready for reading or writing
+    events = selectors.EVENT_READ | selectors.EVENT_WRITE
+    # Pass events mask, socket and data objects to sel.register()
+    sel.register(conn, events, data=data)
+
 sel = selectors.DefaultSelector()
 
 host, port = sys.argv[1], int (sys.argv[2])
