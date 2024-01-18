@@ -7,8 +7,10 @@ from ..States.Play import Play
 # Purpose: Object to hold the states, window, and run the game loop
 # =============================================================================
 class Game:
-    def __init__(self):
+    def __init__(self, Client):
         
+        self.client = Client
+
         # Window upon which everything is drawn over
         self.window = gameWindow.GameWindow()
 

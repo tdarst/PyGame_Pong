@@ -15,11 +15,27 @@ class PlayingPong(gameState.GameState):
         super().__init__(GameObj)
 
         # Instantiate all relevant objects
+        self.player      = None
         self.PlayerRight = paddle.playerRight()
         self.PlayerLeft  = paddle.playerLeft()
         self.Ball        = pongBall.PongBall()
         self.PongWindow  = pongSurface.PongSurface()
         self.pong        = PONG.pongImage()
+
+        self.dataToServer = {
+            "PlayerRightX" : self.PlayerRight.coordX,
+            "PlayerRightY" : self.PlayerRight.coordY,
+            "PlayerRightScore" : self.PlayerRight.score,
+            "PlayerLeftX" : self.PlayerLeft.coordX,
+            "PlayerLeftY" : self.PlayerLeft.coordY,
+            "PlayerLeftScore" : self.PlayerLeft.scoreDisplay,
+            "BallX" : self.Ball.coordX,
+            "BallY" : self.Ball.coordY,
+            "PongWindowX" : self.PongWindow.coordX,
+            "PongWindowY" : self.PongWindow.coordY,
+            "PongX" : self.pong.coordX,
+            "PongY" : self.pong.coordY
+        }
 
         # Create list of relvant objects for iteration
         self.objList = [
@@ -27,8 +43,6 @@ class PlayingPong(gameState.GameState):
             self.PlayerRight,
             self.PlayerLeft,
             self.Ball,
-            self.PlayerRight.scoreDisplay,
-            self.PlayerLeft.scoreDisplay,
             self.pong
         ]
 
@@ -95,6 +109,22 @@ class PlayingPong(gameState.GameState):
             if player.score == 9:
                 win = True
                 return hasWon, player
+            
+    def updateDataToServer(self):
+        self.dataToServer = {
+            "PlayerRightX" : self.PlayerRight.coordX,
+            "PlayerRightY" : self.PlayerRight.coordY,
+            "PlayerRightScore" : self.PlayerRight.score,
+            "PlayerLeftX" : self.PlayerLeft.coordX,
+            "PlayerLeftY" : self.PlayerLeft.coordY,
+            "PlayerLeftScore" : self.PlayerLeft.scoreDisplay,
+            "BallX" : self.Ball.coordX,
+            "BallY" : self.Ball.coordY,
+            "PongWindowX" : self.PongWindow.coordX,
+            "PongWindowY" : self.PongWindow.coordY,
+            "PongX" : self.pong.coordX,
+            "PongY" : self.pong.coordY
+        }
             
     # ======================================================================================================
     # Name: runEvents
