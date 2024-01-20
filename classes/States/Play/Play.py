@@ -12,30 +12,23 @@ class PlayingPong(gameState.GameState):
     
     def __init__(self, GameObj):
 
-        super().__init__(GameObj)
+        self.gameObj = GameObj
 
-        # Instantiate all relevant objects
-        self.player      = None
+        self.assignedPlayerNum = int(self.gameObj.assignedPlayerNum)
+        self.assignedPlayer = None
+        self.opponent = None
+
         self.PlayerRight = paddle.playerRight()
         self.PlayerLeft  = paddle.playerLeft()
         self.Ball        = pongBall.PongBall()
         self.PongWindow  = pongSurface.PongSurface()
         self.pong        = PONG.pongImage()
 
-        self.dataToServer = {
-            "PlayerRightX" : self.PlayerRight.coordX,
-            "PlayerRightY" : self.PlayerRight.coordY,
-            "PlayerRightScore" : self.PlayerRight.score,
-            "PlayerLeftX" : self.PlayerLeft.coordX,
-            "PlayerLeftY" : self.PlayerLeft.coordY,
-            "PlayerLeftScore" : self.PlayerLeft.scoreDisplay,
-            "BallX" : self.Ball.coordX,
-            "BallY" : self.Ball.coordY,
-            "PongWindowX" : self.PongWindow.coordX,
-            "PongWindowY" : self.PongWindow.coordY,
-            "PongX" : self.pong.coordX,
-            "PongY" : self.pong.coordY
-        }
+        self.determinePlayer()
+        self.setLocalControls()
+
+        self.dataOut = f"{self.assignedPlayerNum}:{self.assignedPlayer.coordX},{self.assignedPlayer.coordY}"
+        self.dataIn = None
 
         # Create list of relvant objects for iteration
         self.objList = [
@@ -61,7 +54,17 @@ class PlayingPong(gameState.GameState):
     def TrackMovementAndDraw(self):
         self.gameObj.window.window.fill(self.gameObj.window.background_color)
         for object in self.objList:
-            object.updateCoordinates(600, 100)
+            if object is self.assignedPlayer:
+                object.updateCoordinates(600, 100)
+                self.updateData()
+            elif object is self.opponent:
+                opponentCoords = self.parseData(self.sendData())
+                if opponentCoords:
+                    object.coordX = opponentCoords[0]
+                    object.coordY = opponentCoords[1]
+                    object.updateCoordinates(600,100)
+            else:
+                object.updateCoordinates(600,100)
             object.drawImage()
             self.gameObj.window.window.blit(object.surface, (object.coordX, object.coordY))
             object.fillSurface()
@@ -109,23 +112,34 @@ class PlayingPong(gameState.GameState):
             if player.score == 9:
                 win = True
                 return hasWon, player
-            
-    def updateDataToServer(self):
-        self.dataToServer = {
-            "PlayerRightX" : self.PlayerRight.coordX,
-            "PlayerRightY" : self.PlayerRight.coordY,
-            "PlayerRightScore" : self.PlayerRight.score,
-            "PlayerLeftX" : self.PlayerLeft.coordX,
-            "PlayerLeftY" : self.PlayerLeft.coordY,
-            "PlayerLeftScore" : self.PlayerLeft.scoreDisplay,
-            "BallX" : self.Ball.coordX,
-            "BallY" : self.Ball.coordY,
-            "PongWindowX" : self.PongWindow.coordX,
-            "PongWindowY" : self.PongWindow.coordY,
-            "PongX" : self.pong.coordX,
-            "PongY" : self.pong.coordY
-        }
-            
+
+    def determinePlayer(self):
+        if self.assignedPlayerNum == 0:
+            self.assignedPlayer = self.PlayerLeft
+            self.opponent = self.PlayerRight
+
+        elif self.assignedPlayerNum == 1:
+            self.assignedPlayer = self.PlayerRight
+            self.opponent = self.PlayerLeft
+
+    def setLocalControls(self):
+        self.assignedPlayer.upKey = pygame.K_UP
+        self.assignedPlayer.downKey = pygame.K_DOWN
+
+    def updateData(self):
+        self.dataOut = f"{self.assignedPlayerNum}:{self.assignedPlayer.coordX},{self.assignedPlayer.coordY}"
+
+    def parseData(self, data):
+
+        data = data.split(":")[1].split(",")
+        print(data)
+        return int(data[0]), int(data[1])
+    
+    def sendData(self):
+        reply = self.gameObj.network.send(self.dataOut)
+        return reply
+
+
     # ======================================================================================================
     # Name: runEvents
     # Purpose: Run's the games events
@@ -133,6 +147,3 @@ class PlayingPong(gameState.GameState):
     def runEvents(self):
         self.TrackMovementAndDraw()
         self.DetectCollision()
-        self.DetectGoal()
-        if self.DetectWin():
-            print("won")

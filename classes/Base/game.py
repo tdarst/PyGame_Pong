@@ -1,15 +1,18 @@
 import pygame
 from classes.Window import gameWindow
 from ..States.Play import Play
+import network
 
 # =============================================================================
 # Name: Game
 # Purpose: Object to hold the states, window, and run the game loop
 # =============================================================================
 class Game:
-    def __init__(self, Client):
+    def __init__(self):
         
-        self.client = Client
+        self.network = network.Network()
+
+        self.assignedPlayerNum = self.network.id
 
         # Window upon which everything is drawn over
         self.window = gameWindow.GameWindow()

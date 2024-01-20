@@ -44,12 +44,12 @@ class Paddle(gameSurface.GameSurface):
         key = pygame.key.get_pressed()
 
         # If key is up-key, go up.
-        if key[self.upKey]:
+        if self.upKey and key[self.upKey]:
             if self.top != PONG_WINDOW_TOP:
                 self.coordY -= self.speedY
         
         # If key is down-key, go down.
-        if key[self.downKey]:
+        if self.downKey and key[self.downKey]:
             if self.bottom != PONG_WINDOW_BOTTOM:
                 self.coordY += self.speedY
         
@@ -78,10 +78,6 @@ class playerLeft(Paddle):
         self.coordX = 0
         self.coordY = 290
 
-        # Sets controls
-        self.upKey = pygame.K_w
-        self.downKey = pygame.K_s
-
         # Initializes player left's score display object
         self.scoreDisplay = scoreSurface.playerLeftScoreDisplay()
 
@@ -96,10 +92,6 @@ class playerRight(Paddle):
         # Sets player right's initial coordinates
         self.coordX = 795
         self.coordY = 290
-
-        # Sets controls
-        self.upKey = pygame.K_UP
-        self.downKey = pygame.K_DOWN
 
         # Initializes player right's score display object
         self.scoreDisplay = scoreSurface.playerRightScoreDisplay()
