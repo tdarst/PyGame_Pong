@@ -55,14 +55,9 @@ class PlayingPong(gameState.GameState):
         self.gameObj.window.window.fill(self.gameObj.window.background_color)
         for object in self.objList:
             if object is self.assignedPlayer:
-                object.updateCoordinates(600, 100)
-                self.updateData()
+                self.updateLocalPlayerData(object)
             elif object is self.opponent:
-                opponentCoords = self.parseData(self.sendData())
-                if opponentCoords:
-                    object.coordX = opponentCoords[0]
-                    object.coordY = opponentCoords[1]
-                    object.updateCoordinates(600,100)
+                self.updateOpponentData(object)
             else:
                 object.updateCoordinates(600,100)
             object.drawImage()
@@ -113,6 +108,7 @@ class PlayingPong(gameState.GameState):
                 win = True
                 return hasWon, player
 
+    # TODO: ADD DOCUMENTATION
     def determinePlayer(self):
         if self.assignedPlayerNum == 0:
             self.assignedPlayer = self.PlayerLeft
@@ -122,22 +118,37 @@ class PlayingPong(gameState.GameState):
             self.assignedPlayer = self.PlayerRight
             self.opponent = self.PlayerLeft
 
+    # TODO: ADD DOCUMENTATION
     def setLocalControls(self):
         self.assignedPlayer.upKey = pygame.K_UP
         self.assignedPlayer.downKey = pygame.K_DOWN
 
+    # TODO: ADD DOCUMENTATION   
     def updateData(self):
         self.dataOut = f"{self.assignedPlayerNum}:{self.assignedPlayer.coordX},{self.assignedPlayer.coordY}"
 
+    # TODO: ADD DOCUMENTATION
     def parseData(self, data):
 
         data = data.split(":")[1].split(",")
         print(data)
         return int(data[0]), int(data[1])
     
+    # TODO: ADD DOCUMENTATION
     def sendData(self):
         reply = self.gameObj.network.send(self.dataOut)
         return reply
+    
+    def updateOpponentData(self, object):
+        opponentCoords = self.parseData(self.sendData())
+        if opponentCoords:
+            object.coordX = opponentCoords[0]
+            object.coordY = opponentCoords[1]
+            object.updateCoordinates(600,100)
+
+    def updateLocalPlayerData(self, object):
+        object.updateCoordinates(600, 100)
+        self.updateData()
 
 
     # ======================================================================================================
