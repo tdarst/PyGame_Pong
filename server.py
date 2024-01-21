@@ -1,63 +1,91 @@
 import socket
 from _thread import *
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# ======================================================================================================
+# Name: setLocalControls
+# Purpose: Facilitates communication between connected clients.
+# ======================================================================================================
+class Server:
+    def __init__(self):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server = '127.0.0.1'
-port = 5555
+        self.serverAdd = '127.0.0.1'
+        self.port = 5555
 
-server_ip = socket.gethostbyname(server)
+        self.server_ip = socket.gethostbyname(self.serverAdd)
 
-try:
-    s.bind((server, port))
+        self.currentId = "0"
+        self.pos = ["0:0,290", "1:795,290"]
 
-except socket.error as e:
-    print(str(e))
+        self.running = True
 
-s.listen(2)
-print("Waiting for a connection")
+        self.initializeSocket()
 
-currentId = "0"
-pos = ["0:0,290", "1:795,290"]
-def threaded_client(conn):
-    global currentId, pos
-    conn.send(str.encode(currentId))
-    currentId = "1"
-    reply = ''
-    while True:
+    # ======================================================================================================
+    # Name: initializeSocket
+    # Purpose: Binds socket to address and port, and configures it for listening
+    # ======================================================================================================
+    def initializeSocket(self) -> None:
         try:
-            data = conn.recv(2048)
-            reply = data.decode('utf-8')
-            if not data:
-                conn.send(str.encode("Goodbye"))
+            self.sock.bind((self.serverAdd, self.port))
+
+        except socket.error as e:
+            print(str(e))
+        
+        self.sock.listen(2)
+        print("Waiting for a connection")
+
+    # ======================================================================================================
+    # Name: threaded_client
+    # Purpose: Threaded servicing of client connection
+    # ======================================================================================================
+    def threaded_client(self, conn) -> None:
+        conn.send(str.encode(self.currentId))
+        self.currentId = "1"
+        reply = ''
+        while True:
+            try:
+                data = conn.recv(2048)
+                reply = data.decode('utf-8')
+                if not data:
+                    conn.send(str.encode("Goodbye"))
+                    break
+                else:
+                    print("Recieved: " + reply)
+                    arr = reply.split(":")
+                    id = int(arr[0])
+                    self.pos[id] = reply
+
+                    if id == 0: nid = 1
+                    if id == 1: nid = 0
+
+                    reply = self.pos[nid][:]
+                    print("Sending: " + reply)
+
+                conn.sendall(str.encode(reply))
+            except:
                 break
-            else:
-                print("Recieved: " + reply)
-                arr = reply.split(":")
-                id = int(arr[0])
-                pos[id] = reply
 
-                if id == 0: nid = 1
-                if id == 1: nid = 0
+        print("Connection Closed")
+        self.running = False
+        conn.close()
 
-                reply = pos[nid][:]
-                print("Sending: " + reply)
+    # ======================================================================================================
+    # Name: run
+    # Purpose: Main server loop for accepting and servicing connections.
+    # ======================================================================================================
+    def run(self) -> None:
+        try:
+            while self.running:
+                conn, addr = self.sock.accept()
+                print("Connected to: ", addr)
 
-            conn.sendall(str.encode(reply))
-        except:
-            break
+                start_new_thread(self.threaded_client, (conn,))
 
-    print("Connection Closed")
-    conn.close()
+        except KeyboardInterrupt:
+            print("Exiting Server")
 
-
-try:
-    while True:
-        conn, addr = s.accept()
-        print("Connected to: ", addr)
-
-        start_new_thread(threaded_client, (conn,))
-
-except KeyboardInterrupt:
-    print("Exiting Server")
+if __name__=="__main__":
+    gameServer = Server()
+    gameServer.run()
 
