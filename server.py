@@ -39,7 +39,7 @@ class Server:
     # Name: threaded_client
     # Purpose: Threaded servicing of client connection
     # ======================================================================================================
-    def threaded_client(self, conn) -> None:
+    def threadedClient(self, conn) -> None:
         conn.send(str.encode(self.currentId))
         self.currentId = "1"
         reply = ''
@@ -80,7 +80,7 @@ class Server:
                 conn, addr = self.sock.accept()
                 print("Connected to: ", addr)
 
-                start_new_thread(self.threaded_client, (conn,))
+                start_new_thread(self.threadedClient, (conn,))
 
         except KeyboardInterrupt:
             print("Exiting Server")
