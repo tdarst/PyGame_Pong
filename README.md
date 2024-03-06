@@ -1,5 +1,5 @@
-# H1 Getting started with pygame pong!
-** After Cloning the Repo **
+# Getting started with pygame pong!
+**After Cloning the Repo**
 1. Open the repository in command line
 2. Run pip install -r requirements.txt
 3. Run python server.py
@@ -8,9 +8,9 @@
 
 *This project has currently been sidelined in favor of more relevant projects*
 
-# H1 Currently available features
+# Currently available features
 - Players can see each other's paddles move on screen
 
-# H1 Currently in progress features
+# Currently in progress features
 - Menu
 - Synchronized ball tracking for both players.
