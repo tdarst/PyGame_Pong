@@ -2,7 +2,7 @@ import socket
 from _thread import *
 
 # ======================================================================================================
-# Name: setLocalControls
+# Name: Server
 # Purpose: Facilitates communication between connected clients.
 # ======================================================================================================
 class Server:
@@ -39,7 +39,7 @@ class Server:
     # Name: threaded_client
     # Purpose: Threaded servicing of client connection
     # ======================================================================================================
-    def threadedClient(self, conn) -> None:
+    def threadedClient(self, conn: socket.socket) -> None:
         conn.send(str.encode(self.currentId))
         self.currentId = "1"
         reply = ''
@@ -88,4 +88,3 @@ class Server:
 if __name__=="__main__":
     gameServer = Server()
     gameServer.run()
-
